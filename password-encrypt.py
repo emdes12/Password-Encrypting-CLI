@@ -6,9 +6,15 @@ def write_key():
     key = Fernet.generate_key()
     with open("key.key", "wb") as key_file:
         key_file.write(key)
+    
         
 def load_key():
-    return open("key.key", "rb").read()
+    try:
+        return open("key.key", "rb").read()
+    except FileNotFoundError:
+        write_key()
+        load_key()
+        return 
 
 
 # write_key() # To generate Master key before storing
