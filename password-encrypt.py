@@ -18,6 +18,7 @@ def load_key():
 
 
 # write_key() # To generate Master key before storing
+load_key()
 
 """
     Start creating password storage
@@ -37,11 +38,14 @@ def add_pasword():
     print("✅Password saved\n")
 
 def view_passwords():
-    data = load_data()
-    for account, enc_pass in data.items():
-        decrypted = fer.decrypt(enc_pass.encode()).decode()
-        print(f"{account}: {decrypted}")
-    print("\n")
+    try:
+        data = load_data()
+        for account, enc_pass in data.items():
+            decrypted = fer.decrypt(enc_pass.encode()).decode()
+            print(f"{account}: {decrypted}")
+        print("\n")
+    except:
+        print("Stop it, You don't have access to this\n")
     
 def search_password():
     search_input = input("Enter Account Name: ")
@@ -68,7 +72,6 @@ def load_data():
 def save_data(data):
     with open("vault.json", "w") as vault:
         json.dump(data, vault, indent=4)
-
 
 while True:
     print("Welcome to the Safe Vault\n---\n1. Add Password\n2. View Password\n3. Search by account\nEnter key to Exit")
